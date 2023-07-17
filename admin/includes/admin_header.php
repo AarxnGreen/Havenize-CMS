@@ -43,6 +43,7 @@ if(!isset($_SESSION['role'])) {
     <![endif]-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <link rel="stylesheet" href="css/summernote.min.css" class="stylesheet">
+    <script src="js/jquery.js"></script>
 </head>
 
 <body>
