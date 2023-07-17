@@ -9,21 +9,21 @@ function escape($string) {
 
 function addCategory() {
     global $connection;
-if(isset($_POST['cat_title'])) {
-    $category_title = $_POST['cat_title'];
-    $query = "INSERT INTO category VALUES (NULL, '$category_title')";
-    $result = mysqli_query($connection, $query); 
+    if(isset($_POST['cat_title'])) {
+        $category_title = $_POST['cat_title'];
+        $query = "INSERT INTO category VALUES (NULL, '$category_title')";
+        $result = mysqli_query($connection, $query); 
+        }
     }
-}
 
 function deleteCategory() {
-if (isset($_GET['delete'])) {
-    global $connection;
-    $id = $_GET['delete'];
-    $query = "DELETE FROM category WHERE cat_id='$id'";
-    $result = mysqli_query($connection, $query);
-    header("Location: categories.php");
-    }
+    if (isset($_GET['delete'])) {
+        global $connection;
+        $id = $_GET['delete'];
+        $query = "DELETE FROM category WHERE cat_id='$id'";
+        $result = mysqli_query($connection, $query);
+        header("Location: categories.php");
+        }
 }
 
 function updateCategory() {
@@ -330,6 +330,34 @@ function users_online() {
     $users_online_query = mysqli_query($connection, "SELECT * FROM users_online WHERE time > '$timeOut'"); 
     echo $countUsers = mysqli_num_rows($users_online_query); 
      }                                                                                         
+}
+
+function recordCount($table) {
+    global $connection;
+    $query = "SELECT * FROM " . $table;
+    $result = mysqli_query($connection, $query);
+    return mysqli_num_rows($result);
+}
+
+function postStatusCount($table, $status) {
+    global $connection;
+    $query = "SELECT * FROM $table WHERE post_status = '$status' ";
+    $selectdraftposts = mysqli_query($connection, $query);
+    return mysqli_num_rows($selectdraftposts);
+}
+
+function commentStatusCount($table, $status) {
+    global $connection;
+    $query = "SELECT * FROM $table WHERE comment_status = '$status' ";
+    $selectdraftcomments = mysqli_query($connection, $query);
+    return mysqli_num_rows($selectdraftcomments);
+}
+
+function userCount($table, $role) {
+    global $connection;
+    $query = "SELECT * FROM $table WHERE user_role = '$role' ";
+    $numusers = mysqli_query($connection, $query);
+    return mysqli_num_rows($numusers); 
 }
 
 users_online(); 

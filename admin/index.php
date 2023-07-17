@@ -36,12 +36,9 @@
                         <i class="fa fa-file-text fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                    <?php 
-                     $query = "SELECT * FROM posts ";
-                     $result = mysqli_query($connection, $query);
-                     $postcount = mysqli_num_rows($result);
-                     echo "<div class='huge'>{$postcount}</div>";
-                      ?>
+                    
+                     <div class='huge'><?=$postcount=recordCount('posts')?></div>
+                      
                         <div>Posts</div>
                     </div>
                 </div>
@@ -63,12 +60,8 @@
                         <i class="fa fa-comments fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                     <?php 
-                     $query = "SELECT * FROM comments ";
-                     $result = mysqli_query($connection, $query);
-                     $commentcount = mysqli_num_rows($result);
-                     echo "<div class='huge'>{$commentcount}</div>";
-                      ?>
+                    <div class='huge'><?=$commentcount=recordCount('comments')?></div>
+                      
                       <div>Comments</div>
                     </div>
                 </div>
@@ -90,12 +83,10 @@
                         <i class="fa fa-user fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                    <?php 
-                     $query = "SELECT * FROM users ";
-                     $result = mysqli_query($connection, $query);
-                     $usercount = mysqli_num_rows($result);
-                     echo "<div class='huge'>{$usercount}</div>";
-                      ?>
+                    
+                     
+                     <div class='huge'><?=$usercount=recordCount('users')?></div>
+                      
                         <div> Users</div>
                     </div>
                 </div>
@@ -117,12 +108,10 @@
                         <i class="fa fa-list fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                    <?php 
-                     $query = "SELECT * FROM category ";
-                     $result = mysqli_query($connection, $query);
-                     $catcount = mysqli_num_rows($result);
-                     echo "<div class='huge'>{$catcount}</div>";
-                      ?>
+                    
+                     
+                     <div class='huge'><?=$catcount=recordCount('category')?></div>
+                     
                          <div>Categories</div>
                     </div>
                 </div>
@@ -138,32 +127,13 @@
     </div>
 </div>
 
-            <?php 
-            
-                    $query = "SELECT * FROM posts WHERE post_status = 'Draft' ";
-                    $selectdraftposts = mysqli_query($connection, $query);
-                    $draftcount = mysqli_num_rows($selectdraftposts);
-
-                    $query = "SELECT * FROM posts WHERE post_status = 'Published' ";
-                    $selectpubposts = mysqli_query($connection, $query);
-                    $pubcount = mysqli_num_rows($selectpubposts);
-
-                    $query = "SELECT * FROM comments WHERE comment_status = 'Unapproved' ";
-                    $selectdraftcomments = mysqli_query($connection, $query);
-                    $draftcomments = mysqli_num_rows($selectdraftcomments);
-                    
-                    $query = "SELECT * FROM comments WHERE comment_status = 'Approved' ";
-                    $selectappcomments = mysqli_query($connection, $query);
-                    $appcomments = mysqli_num_rows($selectappcomments);  
-                    
-                    $query = "SELECT * FROM users WHERE user_role = 'User' ";
-                    $numusers = mysqli_query($connection, $query);
-                    $selectedusers = mysqli_num_rows($numusers); 
-                     ?>
-
-
-
-
+                    <?php 
+                    $draftcount = postStatusCount('posts', 'Draft');
+                    $pubcount = postStatusCount('posts', 'Published');
+                    $draftcomments = commentStatusCount('comments', 'unapproved');
+                    $appcomments = commentStatusCount('comments', 'Approved');  
+                    $selectedusers = userCount('users', 'User'); 
+                    ?>
                 <!-- /.row -->
 
                 <div class="row">
