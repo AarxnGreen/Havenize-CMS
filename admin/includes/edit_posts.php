@@ -1,7 +1,5 @@
 <?php 
 
-escapePost();
-
 if(isset($_GET['p_id'])) {
     global $connection;
     $id = $_GET['p_id'];

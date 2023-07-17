@@ -7,7 +7,6 @@ function escape($string) {
 
 }
 
-
 function addCategory() {
     global $connection;
 if(isset($_POST['cat_title'])) {

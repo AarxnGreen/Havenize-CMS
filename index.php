@@ -11,23 +11,35 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
                 <?php
+
+                if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin') {
+                $query = "SELECT * FROM posts";
+                } else {$query = "SELECT * FROM posts WHERE post_status = 'Published'";}
+                $result = mysqli_query($connection, $query);
+                $count = mysqli_num_rows($result);
+                if ($count !== 0) {
+
                     if (!isset($_POST['search'])) {
                         if (isset($_GET['page'])) {
-                            $perPage = 2;
+                            $perPage = 5;
                             $pageNum = $_GET['page'];
                         } else {$pageNum = "";}
                         if ($pageNum == "" || $pageNum == 1) {
                             $page = 0;
-                            $perPage = 2;
+                            $perPage = 5;
                         } else {
                             $page = ($pageNum * $perPage) - $perPage;
                         }
-                    $postquerycount = "SELECT * FROM posts WHERE post_status = 'published'";
+                    if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin'){
+                    $postquerycount = "SELECT * FROM posts";
+                    } else {$postquerycount = "SELECT * FROM posts WHERE post_status = 'Published'";}
                     $find_count = mysqli_query($connection, $postquerycount);
                     $count = mysqli_num_rows($find_count);
-                    $count = ceil($count / $perPage);
-
-                    $query = "SELECT * FROM posts WHERE post_status = 'published' LIMIT $page, $perPage";
+                    $count = $count / $perPage;
+                    $count = ceil($count);
+                    if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin') {
+                    $query = "SELECT * FROM posts LIMIT $page, $perPage"; 
+                    } else {$query = "SELECT * FROM posts WHERE post_status = 'Published' LIMIT $page, $perPage";}
                     } else {
                         $search = $_POST['search'];
                         $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%'";
@@ -43,8 +55,7 @@
                     
                     ?>
                 <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
+                    Posts
                 </h1>
                 <!-- First Blog Post -->
                 <h2>
@@ -60,17 +71,17 @@
                 <p><?=$post_content?></p>
                 <a class="btn btn-primary" href="post.php?p_id=<?=$post_id?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <hr>
-                  <?php } ?>        
+                  <?php }} else echo "<h1 class='text-center'>No Posts Available</h1>"; ?>        
                 <hr>
 
                 <!-- Pager -->
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href='index.php?page=<?= $_GET['page'] - 1; ?>'>&larr; Older</a>
+                        <a href='index.php?page='>&larr; Older</a>
                     </li>
                     <li class="next">
-                        <a href='index.php?page=<?= $_GET['page'] + 1; ?>'>Newer &rarr;</a>
+                        <a href='index.php?page='>Newer &rarr;</a>
                     </li>
                 </ul>
 
@@ -83,7 +94,7 @@
 
         <ul class="pager">
             <?php 
-            for ($i = 1; $i < $count; $i++) {
+            for ($i = 1; $i <= $count; $i++) {
 
                 echo "<li><a href='index.php?page={$i}'>{$i}</a></li";
             }
