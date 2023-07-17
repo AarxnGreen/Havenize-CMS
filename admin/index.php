@@ -18,7 +18,7 @@
                         <h1 class="page-header">
                             
 
-                            <small><?php echo $_SESSION['username'];?></small>
+                            <small><?php if (isset($_SESSION['username'])) {echo $_SESSION['username'];}; ?></small>
                         </h1>
  
                     </div>
