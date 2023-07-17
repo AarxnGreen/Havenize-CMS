@@ -17,23 +17,33 @@
 
                 <!-- Login -->
                 <div class="well">
-                    <h4>Login</h4>
-                    <form action="includes/login.php" method="post">
-                        <div class="input-group">
-                            <input type="text" name="username" class="form-control" placeholder="Enter Username">                       
-                        </div>
+                    <?php 
+                    if (!isset($_SESSION['username'])) {
+                    echo"<h4>Login</h4>";
+                    echo"<form action='includes/login.php' method='post'>";
+                        echo"<div class='input-group'>";
+                            echo"<input type='text' name='username' class='form-control' placeholder='Enter Username'>";                 
+                        echo"</div>";
 
-                        <div class="input-group">
-                            <input type="password" name="password" class="form-control" placeholder="Enter Password">
-                        </div>
+                        echo"<div class='input-group'>";
+                            echo"<input type='password' name='password' class='form-control' placeholder='Enter Password'>";
+                        echo"</div>";
 
-                        <br><button class="btn btn-primary" name="login" type="submit" >Login</button>
-                        <br><h3><?php if(isset($_SESSION['username'])) {echo $_SESSION['username'];}?></h3>
+                        echo"<br><button class='btn btn-primary' name='login' type='submit' >Login</button>";
+
+
+
+
+                        
                         
 
-                    </form>
+                    echo"</form>";
+                    } else {
+                        echo"<a href='includes/logout.php'><button class='btn btn-primary' name='logout' type='submit' >Logout</button></a>";
+                    }?>
 
-                    <a href="includes/logout.php"><button class="btn btn-primary" name="logout" type="submit" >Logout</button></a>
+
+                    <!-- <a href="includes/logout.php"><button class="btn btn-primary" name="logout" type="submit" >Logout</button></a> -->
                     <!-- /.input-group -->
                 </div>
 
