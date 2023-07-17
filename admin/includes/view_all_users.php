@@ -44,6 +44,8 @@ if (isset($_GET['deleteuser'])) {
                                 <th>Email</th>
                                 <th>User Image</th>
                                 <th>Role</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                     <tbody>
@@ -68,8 +70,6 @@ if (isset($_GET['deleteuser'])) {
                         echo"<td>$user_email</td>";
                         echo"<td> <img src='../userimages/$user_image' width='100' height='100'> </td>";
                         echo"<td>$user_role</td>";
-                        echo"<td><a href='users.php?changetoadmin={$user_id}'>Admin</a></td>";
-                        echo"<td><a href='users.php?changetouser={$user_id}'>User</a></td>";
                         echo"<td><a href='users.php?source=edit_user&u_id={$user_id}'>Edit</a></td>";
                         echo"<td><a href='users.php?deleteuser={$user_id}'>Delete</a></td>";
                         echo"</tr>";

@@ -148,7 +148,10 @@ if (isset($_POST['checkBoxArray'])) {
                         </thead>
                     <tbody>
                     <?php 
-                    $query = "SELECT * FROM posts ORDER BY post_id DESC";
+                    $query = "SELECT posts.post_id, posts.post_title, posts.post_author, posts.post_date, posts.post_image, posts.post_category_id, posts.post_tags, posts.post_status, ";
+                    $query .= "posts.post_comment_count, posts.post_views, category.cat_id, category.cat_title ";
+                    $query .= "FROM posts ";
+                    $query .= "LEFT JOIN category ON posts.post_category_id = category.cat_id";
                     $result = mysqli_query($connection, $query);
                     while ($row = mysqli_fetch_assoc($result)) {
                         $post_id = $row['post_id'];
@@ -161,24 +164,15 @@ if (isset($_POST['checkBoxArray'])) {
                         $post_status = $row['post_status'];
                         $post_comment_count = $row['post_comment_count'];
                         $post_views = $row['post_views'];
+                        $catId = $row['cat_id'];
+                        $catTitle = $row['cat_title'];
                     
                         echo"<tr>";
                         echo"<td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='{$post_id}'</td>";
                         echo"<td>$post_id</td>";
                         echo"<td>$post_author</td>";
                         echo"<td>$post_title</td>";
-
-                             $query = "SELECT * FROM category WHERE cat_id = {$post_category_id}";
-                             $selectcategory = mysqli_query($connection, $query);
-                             while ($catrow = mysqli_fetch_assoc($selectcategory)) {
-                             $catTitle = $catrow['cat_title'];
-
                         echo"<td>{$catTitle}</td>";
-                             }
-
-
-
-
                         echo"<td>$post_status</td>";
                         echo"<td> <img src='../images/$post_image' width='100' height='100'> </td>";
                         echo"<td>$post_tags</td>";
