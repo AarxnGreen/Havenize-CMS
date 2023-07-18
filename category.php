@@ -10,6 +10,14 @@
 
             <!-- Blog Entries Column -->
             <div class="col-md-8">
+            <h1 class="page-header">
+            <?php if (isset($_GET['category'])) {
+                    $cat_id = $_GET['category'];
+                    $query = "SELECT * FROM category WHERE cat_id = $cat_id";
+                    $result = mysqli_query($connection, $query);
+                    $fetchCat = mysqli_fetch_assoc($result); } ?>
+                    Category: <?=$fetchCat['cat_title'];?>
+                </h1>
                 <?php
                    if (isset($_GET['category'])) {
                     $post_cat_id = $_GET['category'];
@@ -35,7 +43,7 @@
 
                         if(isset($_SESSION['role']) && $_SESSION['role'] === 'Admin') {
                             $postquerycount = "SELECT * FROM posts WHERE post_category_id=$post_cat_id";
-                        } else {$postquerycount = "SELECT * FROM posts WHERE post_category_id=$post_cat_id AND post_status = 'Publushed'";}
+                        } else {$postquerycount = "SELECT * FROM posts WHERE post_category_id=$post_cat_id AND post_status = 'Published'";}
                         $find_count = mysqli_query($connection, $postquerycount);
                         $count = mysqli_num_rows($find_count);
                         $count = $count / $perPage;
@@ -52,14 +60,6 @@
                         $post_content = substr($row['post_content'],0,100);
                     
                     ?>
-                <h1 class="page-header">
-                    Category:
-                    <?php $query = "SELECT * FROM category WHERE cat_id = $post_cat_id";
-                    $result = mysqli_query($connection, $query);
-                    $catRow = mysqli_fetch_assoc($result);
-                    $catTitle = $catRow['cat_title'];?>
-                    <small><?=$catTitle?></small>
-                </h1>
                 <!-- First Blog Post -->
                 <h2>
                     <a href="post.php?p_id=<?=$post_id?>"><?=$post_title?></a>
@@ -74,7 +74,7 @@
                 <p><?=$post_content?></p>
                 <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <hr>
-                  <?php } } else {echo "<h1 class='text-center'>No Posts Available</h1>";} }?>        
+                  <?php } } else {echo "<h1 class='text-center'>No Posts Available</h1>";} } ?>        
                 <hr>
 
                 <!-- Pager -->
