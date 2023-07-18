@@ -257,14 +257,11 @@ function editPost($id) {
             global $connection;
     
             $username = $_POST['username'];
-            $password = $_POST['password'];
             $email = $_POST['email'];
             $firstname = $_POST['firstname'];
             $lastname = $_POST['lastname'];
-            $user_role = $_POST['role'];
             $user_image = $_FILES['image']['name'];
             $user_image_temp = $_FILES['image']['tmp_name'];
-            $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
             move_uploaded_file($user_image_temp, "../userimages/$user_image");
             if(empty($user_image)) {
@@ -276,7 +273,7 @@ function editPost($id) {
             }
                 move_uploaded_file($user_image_temp, "../images/$user_image");
         
-                $query = "UPDATE users SET username='{$username}', user_password='{$password}', user_firstname='{$firstname}', user_lastname='{$lastname}', user_image='{$user_image}', user_role='{$user_role}' WHERE user_id={$id}";
+                $query = "UPDATE users SET username='{$username}', user_firstname='{$firstname}', user_lastname='{$lastname}', user_email='{$email}', user_image='{$user_image}' WHERE user_id={$id}";
                 mysqli_query($connection, $query);
     
             }

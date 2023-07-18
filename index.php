@@ -10,6 +10,9 @@
 
             <!-- Blog Entries Column -->
             <div class="col-md-8">
+            <h1 class="page-header">
+                    All Posts
+                </h1>
                 <?php
 
                 if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin') {
@@ -54,10 +57,6 @@
                         $post_content = $row['post_content'];
                     
                     ?>
-                <h1 class="page-header">
-                    Posts
-                </h1>
-                <!-- First Blog Post -->
                 <h2>
                     <a href="post.php?p_id=<?=$post_id?>"><?=$post_title?></a>
                 </h2>
@@ -78,10 +77,26 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href='index.php?page='>&larr; Older</a>
+                        <a href=<?php if (isset($_GET['page']) && $_GET['page'] <= $count) {
+                            $page = $_GET['page'];
+                            $page--;
+                            if ($page !== 0) {
+                            echo "index.php?page=$page";}
+                            else {
+                                echo "index.php?";
+                            }
+                            } else {
+                                echo "index.php";
+                            }?>>&larr; Older</a>
                     </li>
                     <li class="next">
-                        <a href='index.php?page='>Newer &rarr;</a>
+                        <a href=<?php if (isset($_GET['page']) && $_GET['page'] < $count) {
+                            $page = $_GET['page'];
+                            $page++;
+                            echo "index.php?page=$page";} elseif (!isset($_GET['page'])) {
+                                echo "index.php?page=1";
+                            }  
+                            ?>>Newer &rarr;</a>
                     </li>
                 </ul>
 

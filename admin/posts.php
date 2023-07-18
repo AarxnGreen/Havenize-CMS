@@ -13,8 +13,10 @@
 
 
                         <h1 class="page-header">
-                            Welcome to Posts
-                            <small>Subheading</small>
+                            <?php if (!isset($_GET['source'])){
+                                echo "Posts Overview";
+                            } else {echo "Add a new post";}?>
+                            
                         </h1>
 
                         <?php

@@ -13,8 +13,9 @@
 
 
                         <h1 class="page-header">
-                            Welcome to Posts
-                            <small>Subheading</small>
+                        <?php if (!isset($_GET['source'])){
+                                echo "Users Overview";
+                            } else {echo "Add a new user";}?>
                         </h1>
 
                         <?php

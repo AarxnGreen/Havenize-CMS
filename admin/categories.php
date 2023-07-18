@@ -13,8 +13,7 @@
 
 
                         <h1 class="page-header">
-                            Welcome to Admin
-                            <small>Subheading</small>
+                            Categories
                         </h1>
                         <div class="col-xs-6">
                         <?php

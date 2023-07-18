@@ -12,7 +12,6 @@
         $user_email = $row['user_email'];
         $user_role = $row['user_role'];
         $user_image = $row['user_image'];
-        $user_password = $row['user_password'];
     }
 }    
  
@@ -37,8 +36,8 @@ if (isset($_POST['update_profile'])) {
 
 
                         <h1 class="page-header">
-                            Welcome to Posts
-                            <small>Subheading</small>
+                            Update Profile
+                            <small></small>
                             </h1>
                             <form action="" method="post" enctype="multipart/form-data">    
      
@@ -49,10 +48,6 @@ if (isset($_POST['update_profile'])) {
       </div>
         
       
-      <div class="form-group">
-         <label for="password">Password</label>
-         <input type="password" class="form-control" name="password" value="<?=$user_password?>">
-     </div>
      
     <div class="form-group">
          <label for="email">Email</label>
@@ -68,14 +63,6 @@ if (isset($_POST['update_profile'])) {
          <label for="lastname">Last Name</label>
          <input type="text" class="form-control" name="lastname" value="<?=$user_lastname?>">
      </div>
-
-    <div class="form-group">
-        <label for="role">Role</label>
-        <select name="role" selected="<?=$user_role?>">
-            <option value='Admin'>Admin</option>
-            <option value='User'>User</option>
-        </select>
-    </div>
       
      <div class="form-group">
          <label for="userimage">Profile Picture</label>

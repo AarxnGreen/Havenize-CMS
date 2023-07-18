@@ -13,8 +13,8 @@
 
 
                         <h1 class="page-header">
-                            Welcome to Posts
-                            <small>Subheading</small>
+                           Comments Overview
+                            
                         </h1>
 
                         <?php
