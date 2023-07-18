@@ -1,5 +1,5 @@
 # Havenize-CMS
-Basic CMS utilizing jQuery, Bootstrap and procedural PHP. Not intended to used as a real web-app and is instead a proof-of-concept hobby project to test functionality and feature integration. Does NOT use prepared statements.
+Basic CMS utilizing jQuery, Bootstrap and procedural PHP. Not intended to used as a real web-app and is a proof-of-concept hobby project to test functionality and feature integration. 
 
 Features:
 
