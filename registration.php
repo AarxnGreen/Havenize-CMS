@@ -1,29 +1,55 @@
 <?php  include "includes/header.php"; ?>
-<?php
+<?php $message = "";
 
-if(isset($_POST['submit'])) {
+if($_SERVER['REQUEST_METHOD'] === "POST") {
+    
+    $username = trim($_POST['username']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
-    if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email'])) {
+    $error = [
+        'username' => '',
+        'email' => '',
+        'password' => ''
+    ];
 
-    $username = mysqli_real_escape_string($connection, $_POST['username']);
-    $password = mysqli_real_escape_string($connection, $_POST['password']);
-    $email = mysqli_real_escape_string($connection, $_POST['email']);
-    $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 10));
-
-    $query = "INSERT INTO users (username, user_password, user_email, user_role) VALUES ('{$username}', '{$password}', '{$email}', 'User')";
-    $registerUserQuery = mysqli_query($connection, $query);
-    if (!$registerUserQuery) {
-        die("QUERY FAILED " . mysqli_error($connection));
+    if(strlen($username) < 4) {
+        $error['username'] = "Username needs to be longer than 4 characters.";
     }
 
-    $message = "Your registration has been submitted.";
-    } else {
-        $message = "Fields cannot be empty.";
+    if ($username === '') {
+        $error['username'] = "Username cannot be empty.";
     }
-} else {
 
-    $message = "";
-}
+    if (userExists($username)) {
+        $error['username'] = "Username already exists.";
+    }
+
+    if (emailExists($email)) {
+        $error['email'] = "Email already in use. <a href='index.php'>Login</a>";
+    }
+
+    if ($password === '') {
+        $error['password'] = "Password cannot be empty.";
+    }
+
+    if ($email === '') {
+        $error['email'] = "Email cannot be empty.";
+    }
+
+    foreach ($error as $key => $value) {
+        if (empty($value)) {
+
+            unset($error[$key]);
+        }
+    }
+
+    if (empty($error)) {
+
+        registerUser($username, $password, $email);
+        login($username, $password);
+    }   
+} 
 
 
 
@@ -44,18 +70,21 @@ if(isset($_POST['submit'])) {
                 <div class="form-wrap">
                 <h1>Register</h1>
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
-                        <h6 class="text-center"><?=$message?></h6>
+                        <h6 class="text-center"></h6>
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
                             <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">
+                            <p><?php echo isset($error['username']) ? $error['username'] : '' ?></p>
                         </div>
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
                             <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com">
+                            <p><?php echo isset($error['email']) ? $error['email'] : '' ?></p>
                         </div>
                          <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
                             <input type="password" name="password" id="key" class="form-control" placeholder="Password">
+                            <p><?php echo isset($error['password']) ? $error['password'] : '' ?></p>
                         </div>
                 
                         <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
